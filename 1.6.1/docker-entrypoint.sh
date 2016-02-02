@@ -14,15 +14,15 @@
 set -e
 
 if [ "$1" = 'couchdb' ]; then
+
+	if [ "$COUCHDB_USER" ] && [ "$COUCHDB_PASSWORD" ]; then
+		# Create admin
+		printf "[admins]\n$COUCHDB_USER = $COUCHDB_PASSWORD\n" > /usr/local/etc/couchdb/local.d/docker.ini
+	fi
+
 	# Start CouchDB
 	couchdb -b > /dev/null 2>&1
 	while ! curl -s 127.0.0.1:5984 > /dev/null; do sleep 1; done
-
-	if [ "$COUCHDB_USER" ] && [ "$COUCHDB_PASSWORD" ]; then
-		# Create user
-		echo "Creating CouchDB admin: \"$COUCHDB_USER\"..."
-		curl -X PUT -sS 127.0.0.1:5984/_config/admins/$COUCHDB_USER -d \"${COUCHDB_PASSWORD}\" > /dev/null 2>&1
-	fi
 
 	if [ "$(curl -s 127.0.0.1:5984/_config/admins)" == "{}" ]; then
 		# The - option suppresses leading tabs but *not* spaces. :)
