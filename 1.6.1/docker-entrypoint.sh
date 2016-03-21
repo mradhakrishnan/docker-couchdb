@@ -32,14 +32,4 @@ if [ "$1" = 'couchdb' ]; then
   exec gosu couchdb "$@"
 fi
 
-localInit ="/usr/local/etc/couchdb/local.ini"
-if [ -f "$localInit" ];
-then
-   echo "file $localInit exist."
-else
-   echo "file $localInit does not exist."
-   cp /tmp/local.ini /usr/local/etc/couchdb
-   echo "copied /tmp/local.ini to $localInit"
-fi
-
 exec "$@"
