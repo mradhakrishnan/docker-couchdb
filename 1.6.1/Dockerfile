@@ -101,5 +101,5 @@ VOLUME ["/usr/local"]
 EXPOSE 5984
 WORKDIR /var/lib/couchdb
 
-ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
+ENTRYPOINT [tini, "--", "/docker-entrypoint.sh"]
 CMD ["couchdb"]
