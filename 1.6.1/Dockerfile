@@ -96,10 +96,10 @@ RUN buildDeps=' \
 COPY ./docker-entrypoint.sh /
 
 # Define mountable directories.
-VOLUME ["/usr/local"]
+VOLUME ["/usr/local/var/lib/couchdb"]
 
 EXPOSE 5984
 WORKDIR /var/lib/couchdb
 
-ENTRYPOINT ["/usr/local/bin/tini", "--", "/docker-entrypoint.sh"]
+ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
 CMD ["couchdb"]
